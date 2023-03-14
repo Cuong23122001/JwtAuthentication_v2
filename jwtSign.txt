@@ -1,0 +1,16 @@
+var jwt = require('jsonwebtoken');
+//token = header.payload.signature
+// data + secret +sign = token
+// token + secret +verify = data
+var data = { username: 'admin' }
+var password = '123456';
+//Tạo token ko iat, hàm đồng bộ
+// var token = jwt.sign(data, password);
+
+//Tạo token có iat, hàm có callback nên là hàm bất đồng bộ
+//(hàm đồng bộ sẽ thực hiện trước hành bất đồng bộ)
+var token = jwt.sign(data, password, {
+    expiresIn: 30 //thời gian token bị phá hủy tính bằng s
+}, function (err, data) {
+    console.log('data = ', data);
+});
