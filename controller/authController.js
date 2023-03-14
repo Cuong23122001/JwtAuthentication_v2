@@ -53,7 +53,7 @@ const authController = {
     logout: async (req, res) => {
         try {
             const id = req.query.id;
-            await Account.findByIdAndUpdate(id, { token: { refreshToken: null } });
+            await Account.findByIdAndUpdate(id, { token: { refreshToken: "" } });
             res.status(200).json("Logged out successfully!")
         } catch (error) {
             res.json(error);
