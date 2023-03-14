@@ -2,10 +2,9 @@ require('dotenv').config();
 const express = require('express');
 const app = express();
 const cors = require("cors");
-app.set('view engine', 'hbs')
-app.use(express.static('public'))
-
-const router = require("./router");
+const authRoutes = require("./routes/auth");
+const userRoutes = require("./routes/user");
+const blogRoutes = require("./routes/blog")
 const mongoose = require('mongoose')
 
 mongoose
@@ -20,12 +19,19 @@ mongoose
         console.log(err);
     });
 
+app.use((err, req, res, next) => {
+    console.log(err);
+})
 
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-app.use(router);
+//ROUTES
+app.use("/v1/auth", authRoutes);
+app.use("/v1/user", userRoutes);
+app.use("/v1/blog", blogRoutes);
+
 
 const PORT = process.env.PORT || 2111;
 app.listen(PORT)
