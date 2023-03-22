@@ -1,12 +1,16 @@
-const mongoose = require("mongoose");
+const constant = require('../constant/dbo');
+const mongoose = require('mongoose');
 const UserSchema = new mongoose.Schema({
-    name: String,
-    age: Number,
-    email: String,
-    phone: String,
+  username: String,
+  password: String,
+  name: String,
+  email: String,
+  age: Number,
+  phone: String,
+  token: [{ type: Object }],
 }, {
-    "collection": "User"
-})
+  'collection': constant.USER,
+});
 
-const User = mongoose.model("User", UserSchema);
+const User = mongoose.model(constant.USER, UserSchema);
 module.exports = User;
