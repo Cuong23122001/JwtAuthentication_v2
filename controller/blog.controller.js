@@ -9,45 +9,55 @@ const blogController = {
         description: description,
         createdAt: moment().format('YYYY/MM/DD h:mm:ss a'),
       };
-      console.log(txtBlog);
       const newBlog = await Blog.create(txtBlog);
       res.status(200).json(newBlog);
-    } catch (error) {
-      res.status(500).json(error);
+    } catch (err) {
+      res.status(500).json({ msg: err.message });
     }
   },
   getAllBlog: async (req, res) => {
     try {
       const blogs = await Blog.find();
       res.status(200).json(blogs);
-    } catch (error) {
-      res.status(500).json(error);
+    } catch (err) {
+      res.status(500).json({ msg: err.message });
     }
   },
   getBlogById: async (req, res) => {
     try {
       const blog = await Blog.findById(req.params.id);
-      res.status(200).json(blog);
+      if (blog) {
+        res.status(200).json(blog);
+      } else {
+        res.send({ msg: 'Blog not found' });
+      }
     } catch (err) {
-      res.status(500).json(err);
+      res.status(500).json({ msg: err.message });
     }
   },
   updateBlog: async (req, res) => {
     try {
       const blog = await Blog.findById(req.params.id);
-      await blog.updateOne({ $set: req.body });
-      res.status(200).json('Update Successfully!!!' + blog);
+      if (blog) {
+        await blog.updateOne({ $set: req.body });
+        res.status(200).json('Update Successfully!!! \n' + blog);
+      } else {
+        res.send({ msg: 'Blog not found' });
+      }
     } catch (err) {
-      console.log('Fail');
-      res.status(500).json(err);
+      res.status(500).json({ msg: err.message });
     }
   },
   deleteBlog: async (req, res) => {
     try {
       const blog = await Blog.findByIdAndDelete(req.params.id);
-      res.status(200).json('Delete Successfully!!!' + blog);
+      if (blog) {
+        res.status(200).json('Delete Successfully!!! \n' + blog);
+      } else {
+        res.send({ msg: 'Blog not found' });
+      }
     } catch (err) {
-      res.status(500).json(err);
+      res.status(500).json({ msg: err.message });
     }
   },
 };
