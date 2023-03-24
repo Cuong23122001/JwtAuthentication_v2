@@ -40,7 +40,10 @@ const blogController = {
       const blog = await Blog.findById(req.params.id);
       if (blog) {
         await blog.updateOne({ $set: req.body });
-        res.status(200).json('Update Successfully!!! \n' + blog);
+        res.status(200).json({
+          msg: 'Update Successfully!!!',
+          data: blog.id,
+        });
       } else {
         res.send({ msg: 'Blog not found' });
       }
@@ -52,7 +55,10 @@ const blogController = {
     try {
       const blog = await Blog.findByIdAndDelete(req.params.id);
       if (blog) {
-        res.status(200).json('Delete Successfully!!! \n' + blog);
+        res.status(200).json({
+          msg: 'Delete Successfully!!!',
+          data: blog._id,
+        });
       } else {
         res.send({ msg: 'Blog not found' });
       }

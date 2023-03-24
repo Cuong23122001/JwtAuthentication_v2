@@ -42,7 +42,7 @@ const authController = {
     try {
       const id = req.query.id;
       await User.findByIdAndUpdate(id, { token: { refreshToken: '' } });
-      res.status(200).json('Logged out successfully!');
+      res.status(200).json( {msg: 'Logged out successfully!'});
     } catch (error) {
       res.status(500).json({msg: error.message});
     }

@@ -37,9 +37,17 @@ const userController = {
     try {
       const user = await User.findById(req.params.id);
       if (user) {
-        res.status(200).json(user);
+        const getUser = {
+          _id: user._id,
+          username: user.username,
+          name: user.name,
+          email: user.email,
+          age: user.age,
+          phone: user.phone,
+        };
+        res.status(200).json(getUser);
       } else {
-        res.send({msg: 'User not found'});
+        res.send({ msg: 'User not found' });
       }
     } catch (err) {
       res.status(500).json({ msg: err.message });
@@ -70,7 +78,10 @@ const userController = {
     try {
       const user = await User.findByIdAndDelete(req.params.id);
       if (user) {
-        res.status(200).json('Delete Successfully!!!' + user.name);
+        res.status(200).json({
+          msg: 'Delete Successfully!!!',
+          data: user._id,
+        });
       } else {
         res.send({ msg: 'User not found' });
       }

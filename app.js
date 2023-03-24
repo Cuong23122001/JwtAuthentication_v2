@@ -20,6 +20,6 @@ app.use((err, req, res, next) => {
   next();
 });
 
-const PORT = process.env.PORT || 2111;
+const PORT = process.env.LOCALHOST_PORT;
 app.listen(PORT);
 console.log('app running is: ', PORT);
